@@ -20,7 +20,7 @@ function Signin() {
         console.log(form)
         try {
             await authLogin(dispatch, { user: form.user, password: form.password });
-            navigate('/account', { replace: true });
+            navigate('/home', { replace: true });
         } catch (error) {
             console.log(error);
         }
