@@ -17,6 +17,12 @@ const linksMenu = [
         label: 'Create Bill',
         url: 'createbilling',
         icon: 'icon-plus'
+    },
+    {
+        key: 'crudservice',
+        label: 'Crud Service',
+        url: 'crudservice',
+        icon: 'icon-plus'
     }
 ];
 

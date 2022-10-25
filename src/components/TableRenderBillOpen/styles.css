@@ -1,0 +1,6 @@
+.row {
+    cursor: pointer;
+}
+.selectedRow {
+    background-color: #767575;
+}

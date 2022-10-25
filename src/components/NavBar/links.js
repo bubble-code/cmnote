@@ -19,7 +19,7 @@ const links = [
         name: "CaseManagement",
         type: "collapse",
         key: "casemanagement",
-        route: "/casemanagement",
+        route: "/casemanager",
     }
 ]
 

@@ -1,26 +1,35 @@
-import { useState } from 'react';
+// import { useState } from 'react';
+import { SliceProvider, BillingByCmProvider } from '../../Redux/sliceProvider';
+import { SliceCMs, SliceBillingByCm } from '../../Redux/Slices/CmSlice';
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import NavBarVertical from '../../components/NavVertical/NavBarVertical';
 
 export const Billing = () => {
-    const [currentLink, setCurrentLink] = useState(1);
-    const location = useLocation();
-    console.log(location.pathname.split('/')[1]);
+    // const location = useLocation();
+    // console.log(location.pathname.split('/')[1]);
 
-    const handleLink = (e) => {
-        setCurrentLink(e.target.id);
-        // setCurrentLink(link);
-    };
     return (
-        <Row justify='start' style={{ paddingTop: '2rem' }}>
-            <Col span={2}>
-                <NavBarVertical />
-            </Col>
-            <Col span={20}>
-                <Outlet />
-            </Col>
-        </Row>
+        <SliceProvider slice={SliceCMs}>
+            <BillingByCmProvider slice={SliceBillingByCm}>
+                <Col span={24}>
+                    <Row justify='space-between' align='top' className='container-form-login' >
+                        <Col span={4}>
+                            <Row justify='start' style={{ paddingTop: '2rem' }}>
+                                <Col span={2}>
+                                    <NavBarVertical />
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col span={20}>
+                            <Row justify='start' style={{ paddingTop: '2rem' }}>
+                                <Outlet />
+                            </Row>
+                        </Col>
+                    </Row>
+                </Col>
+            </BillingByCmProvider>
+        </SliceProvider>
     )
 }
 
