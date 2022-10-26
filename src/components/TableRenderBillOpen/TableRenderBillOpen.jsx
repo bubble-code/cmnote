@@ -39,7 +39,7 @@ const TableRenderBillOpen = ({ listBills = {} }) => {
                                 // console.log(item2)
                                 const dx = Object.values(description).join(', ');
                                 return (
-                                    <Col span={24}>
+                                    <Col span={24} key={item2.id}>
                                         <Row key={index} justify='start' className={`hover row ${selectRow === item2.id ? 'selectedRow' : ''}`} onClick={(e) => onClickToEdit(item2)}>
                                             <Col span={6} >
                                                 <Typography.Title level={5} >{item2.cn}</Typography.Title>

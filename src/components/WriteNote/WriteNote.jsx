@@ -1,7 +1,7 @@
 
 import moment from "moment";
 import { Editor } from "@tinymce/tinymce-react";
-import { Button, Col, Row, Typography } from "antd";
+import { Button, Col, Input, Row, Typography } from "antd";
 
 export const WriteNote = ({ noteEdit, handleSave }) => {
 
@@ -12,17 +12,24 @@ export const WriteNote = ({ noteEdit, handleSave }) => {
     return (
         <Col span={24} style={{ minHeight: '70vh', padding: '0px 20px 0px 20px', marginTop: '50px' }} >
             <Row style={{ marginBottom: '10px' }}>
-                <Col span={6}>
+                <Col span={5}>
                     <Typography.Title level={5} >{noteEdit.cn}</Typography.Title>
                 </Col>
+                <Col span={2}>
+                    <Input type="number" placeholder="Setting" size="small"  />
+                </Col>
+                <Col span={2}></Col>
                 <Col span={2}>
                     <Typography.Text level={5}>{moment(noteEdit.timeStart, 'HH:mm').format('HH:mm')}</Typography.Text>
                 </Col>
                 <Col span={2}>
                     <Typography.Text level={5}>{moment(noteEdit.timeEnd, 'HH:mm').format('HH:mm')}</Typography.Text>
                 </Col>
-                <Col span={8}>
+                <Col span={3}>
                     <Button type='primary' onClick={handleEditorSave} >Save</Button>
+                </Col>
+                <Col span={3}>
+                    <Button type='primary' onClick={handleEditorSave} >Finish</Button>
                 </Col>
             </Row>
             <Editor

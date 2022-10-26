@@ -59,13 +59,22 @@ class DataService {
         }
     }
 
+    // ===========================================
+    sortByDate(data) {
+        const objectSort = {};
+        Object.keys(data).sort((a, b) => moment(a, "DDMMYYYY").diff(moment(b, "DDMMYYYY"))).forEach((key) => {
+            objectSort[key] = data[key].sort((a, b) => moment(a.timeStart, "HHmm").diff(moment(b.timeStart, "HHmm")));
+        });
+        return objectSort;
+    }
+
     async getBillingOpenByCm({ cm }) {
         if (cm) {
             const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
             const querySnapShot = query(collectionn, where("status", "==", "open"));
             const result = await getDocs(querySnapShot)
             const cWithBill = new Set();
-            const data = result.docs.reduce((acc, cur) => {
+            const fetchDataGroupByDate = result.docs.reduce((acc, cur) => {
                 // console.log("cur.data()", cur.data());
                 const id = cur.id;
                 const { fecha } = cur.data();
@@ -76,6 +85,7 @@ class DataService {
                 cWithBill.add(cur.data().cn);
                 return acc;
             }, {});
+            const data = this.sortByDate(fetchDataGroupByDate);
 
             // console.log(cWithBill);
             return { initialData: data, data, clienWithBill: [...cWithBill] };
