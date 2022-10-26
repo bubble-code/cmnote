@@ -14,7 +14,7 @@ export const ListBilling = () => {
   const { data: listCms } = useSliceSelector();
   const { getBillingByCm, errorBillingByCm, loadingBillingByCm } = useSliceBillingByCmActions();
   const { data: listBillingByCm = {} } = useSliceBillingByCmSelector();
-  const { clienWithBill = [], data: listBills } = listBillingByCm;
+  const { clienWithBill = [], data: listBills } = listBillingByCm; 
   const dispatch = useDispatch();
 
 

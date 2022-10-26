@@ -11,7 +11,7 @@ const getCms = async (dispatch, func) => {
 
 const getBillingByCMs = async (dispatch, loadF, getF, errorF, cm) => {
     dispatch(loadF());
-    try {
+    try { 
         const response = await DataService.getBillingOpenByCm({ cm: cm });
         dispatch(getF(response));
     } catch (error) {
