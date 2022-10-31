@@ -7,7 +7,7 @@ export const ModalAddService = ({ isOpen, handleClose, updateList }) => {
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        try {
+        try { 
             addService(values);
             form.resetFields();
             updateList();

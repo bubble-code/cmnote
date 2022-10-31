@@ -5,6 +5,8 @@ import { Button, Col, Input, Row, Typography } from "antd";
 
 export const WriteNote = ({ noteEdit, handleSave }) => {
 
+    console.log("Note", noteEdit)
+
     const handleEditorSave = (content) => {
         console.log(content);
     };
@@ -16,7 +18,7 @@ export const WriteNote = ({ noteEdit, handleSave }) => {
                     <Typography.Title level={5} >{noteEdit.cn}</Typography.Title>
                 </Col>
                 <Col span={2}>
-                    <Input type="number" placeholder="Setting" size="small"  />
+                    <Input type="number" placeholder="Setting" size="small" />
                 </Col>
                 <Col span={2}></Col>
                 <Col span={2}>

@@ -45,9 +45,12 @@ const updateService = async (data, id) => {
 
 const getDetailsServices = async (idService) => {
     const response = await DataService.getDetailsServices({ serviceId: idService });
-    return response;
+    return response; 
+};
+
+const createUpdateBilling = async (data) => {
+    await DataService.createBilling({ data: data });
 };
 
 
-
-export { getCms, getClients, getServices, addService, deleteService, updateService, getDetailsServices, getBillingByCMs };
+export { getCms, getClients, getServices, addService, deleteService, updateService, getDetailsServices, getBillingByCMs, createUpdateBilling };

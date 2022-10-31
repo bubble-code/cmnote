@@ -36,9 +36,6 @@ class DataService {
         const docRef = doc(db, `${this._pathService}`, `${service}`);
         await setDoc(docRef, { service, description });
     }
-    // const { name, lastName } = data;
-    //     const docRef = doc(db, `${this._pathCM}/${cm}/activeClient/`, `${name} ${lastName}`);
-    //     await setDoc(docRef, data);
 
     async deleteService({ id }) {
         const docRef = doc(db, `${this._pathService}`, `${id}`);
@@ -59,6 +56,16 @@ class DataService {
         }
     }
 
+    async createBilling({ data }) {
+        const { cm } = data;
+        try {
+            const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+            await addDoc(collectionn, { ...data });
+            return true;
+        } catch (error) {
+            console.log(error);
+        }
+    }
     // ===========================================
     sortByDate(data) {
         const objectSort = {};
@@ -96,16 +103,7 @@ class DataService {
 
     // ********************************** CRUD Billings****************************************************
     // #region CRUD Billings
-    async createBilling({ data }) {
-        const { cm } = data;
-        try {
-            const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-            await addDoc(collectionn, { ...data });
-            return true;
-        } catch (error) {
-            console.log(error);
-        }
-    }
+
     async updateSerNote({ cm, id, data }) {
         const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
         await updateDoc(docRef, data);
@@ -196,7 +194,7 @@ class DataService {
         const result = await getDocs(querySnapShot)
         return result.docs.map((item) => {
             // const { name, lastName } = item.data();
-            return { label: item.id, ...item.data() }
+            return { label: item.id, cnumb: item.data().cnumb };
         });
     }
     // { id: item.id, label: item.data()['serviceDesx'], ...item.data() }
