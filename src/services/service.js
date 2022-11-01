@@ -66,6 +66,11 @@ class DataService {
             console.log(error);
         }
     }
+    async saveNote({ cm, id, data }) {
+        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+        await updateDoc(docRef, data);
+    }
+
     // ===========================================
     sortByDate(data) {
         const objectSort = {};
@@ -104,10 +109,6 @@ class DataService {
     // ********************************** CRUD Billings****************************************************
     // #region CRUD Billings
 
-    async updateSerNote({ cm, id, data }) {
-        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
-        await updateDoc(docRef, data);
-    }
 
     // async deleteService({ cm, id }) {
     //     const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);

@@ -1,14 +1,22 @@
 
+
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
 import moment from "moment";
+import { saveNote } from "../../Redux/Actions/ActionCMS";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button, Col, Input, Row, Typography } from "antd";
 
 export const WriteNote = ({ noteEdit, handleSave }) => {
-
-    console.log("Note", noteEdit)
+    const dispatch = useDispatch();
+    const editorRef = useRef(null);
 
     const handleEditorSave = (content) => {
         console.log(content);
+    };
+
+    const submitNote = () => {
+        saveNote({ dispatch: dispatch, data: { ...noteEdit, sNote: editorRef.current.getContent(), isInProcess: true } })
     };
 
     return (
@@ -28,15 +36,13 @@ export const WriteNote = ({ noteEdit, handleSave }) => {
                     <Typography.Text level={5}>{moment(noteEdit.timeEnd, 'HH:mm').format('HH:mm')}</Typography.Text>
                 </Col>
                 <Col span={3}>
-                    <Button type='primary' onClick={handleEditorSave} >Save</Button>
-                </Col>
-                <Col span={3}>
-                    <Button type='primary' onClick={handleEditorSave} >Finish</Button>
+                    <Button type='primary' onClick={submitNote} >Save</Button>
                 </Col>
             </Row>
             <Editor
                 apiKey='jgtl5czj43aj8fysglacem8dii96jgui2meic2tj27f0cfb4'
                 value={noteEdit.sNote}
+                onInit={(evt, editor) => editorRef.current = editor}
                 init={{
                     height: 800,
                     menubar: true,

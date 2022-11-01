@@ -1,6 +1,4 @@
 import DataService from '../../services/service';
-import { updateAll } from '../Reducers/CmREducers';
-import { loadingBillingByCm, errorBillingByCm, getBillingByCm } from "../Reducers/BillingByCmReducer";
 
 // const updateAll = createAction('UPDATE_ALL');
 
@@ -11,7 +9,7 @@ const getCms = async (dispatch, func) => {
 
 const getBillingByCMs = async (dispatch, loadF, getF, errorF, cm) => {
     dispatch(loadF());
-    try { 
+    try {
         const response = await DataService.getBillingOpenByCm({ cm: cm });
         dispatch(getF(response));
     } catch (error) {
@@ -45,12 +43,21 @@ const updateService = async (data, id) => {
 
 const getDetailsServices = async (idService) => {
     const response = await DataService.getDetailsServices({ serviceId: idService });
-    return response; 
+    return response;
 };
 
 const createUpdateBilling = async (data) => {
     await DataService.createBilling({ data: data });
 };
 
+const saveNote = async ({ dispatch, data, func }) => {
+    try {
+        await DataService.saveNote({ cm: data.cm, id: data.id, data: data });
+        dispatch(func());
+    } catch (error) {
+        console.log("error loading billing by cm", error);
+    }
+};
 
-export { getCms, getClients, getServices, addService, deleteService, updateService, getDetailsServices, getBillingByCMs, createUpdateBilling };
+
+export { getCms, getClients, getServices, addService, deleteService, updateService, getDetailsServices, getBillingByCMs, createUpdateBilling, saveNote };
