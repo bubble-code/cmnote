@@ -1,0 +1,8 @@
+.NodeStyleReset {
+    fill: transparent;
+    stroke: transparent;
+}
+
+.NodeWrapper {
+    position: relative;
+}

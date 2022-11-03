@@ -4,13 +4,15 @@ import { useDispatch } from 'react-redux';
 import { getCms, getClients, getServices, getDetailsServices, createUpdateBilling } from '../../Redux/Actions/ActionCMS';
 import { useSliceActions, useSliceSelector } from '../../Redux/sliceProvider';
 import { countUnits, duration } from './timeAndUnits';
-
-import { Row, Col, Form, Input, Button, Select, DatePicker, InputNumber, message, Checkbox, AutoComplete } from 'antd';
 import moment from 'moment/moment';
-import { async } from '@firebase/util';
+
+import { Col, Form, Input, Button, Select, Row } from 'antd';
+import { GrapHistory } from '../../components/GraphHistory/GrapHistory';
+import './styles.css';
+
 const { Option } = Select;
 
-const initialValuesForm = { 
+const initialValuesForm = {
     cn: '',
     cm: '',
     description: [],
@@ -40,6 +42,8 @@ export const CreateBilling = () => {
     const [listClients, setListClients] = useState([]);
     const [services, setServices] = useState([]);
     const [detailsServices, setDetailsServices] = useState([]);
+    const [cn, setCn] = useState('');
+    const [cm, setCm] = useState('');
 
     const fetchData = useCallback(async () => {
         await getCms(dispatch, updateAll);
@@ -53,6 +57,7 @@ export const CreateBilling = () => {
         console.log(value);
         if (Boolean(value)) {
             form.setFieldValue('cm', value);
+            setCm(value);
             const response = await getClients(value);
             setListClients(response);
         }
@@ -60,8 +65,9 @@ export const CreateBilling = () => {
     const onChangeCn = (value) => {
         if (Boolean(value)) {
             const { label, cnumb } = listClients.find(client => client.label === value);
-            console.log(label, cnumb);
+            // console.log(label, cnumb);
             form.setFieldValue('cn', label);
+            setCn(label);
             form.setFieldValue('cnumb', cnumb);
         }
     };
@@ -96,65 +102,72 @@ export const CreateBilling = () => {
     };
 
     return (
-        <Col span={12} style={{ minHeight: '50vh', padding: '0px 20px 0px 20px' }} >
-            <Form name='newBill' onFinish={onFinish} form={form} wrapperCol={{ span: 24 }} labelCol={{ span: 6 }} initialValues={initialValuesForm} >
-                <Form.Item name='cm' label='Case Manager' rules={[{ required: true, message: 'Please select the CM!' }]} >
-                    <Select placeholder='Case Manager' allowClear onChange={onChangeCm}>
-                        {data && data.map((item, index) => (
-                            <Option key={index} value={item.label}>{item.label}</Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item name='cn' label='Name Client' rules={[{ required: true, message: 'Please select the Client Name' }]}>
-                    <Select placeholder='Client Name' allowClear showSearch onChange={onChangeCn}>
-                        {listClients && listClients.map((item, index) => (
-                            <Option key={index} id={item.cnumb} value={item.label}>{item.label}</Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item name='fecha' label='Select Date' rules={[{ required: true, message: 'Plase Chose the Date' }]} >
-                    <Input type='date' onBlur={onchangeTime} id={'fecha'} />
-                </Form.Item>
-                <Form.Item label='Domain' name={'domain'} rules={[{ required: true, message: 'Plase Chose the Date' }]} >
-                    <Input type='number' allowClear />
-                </Form.Item>
-                <Form.Item name={'pos'} label='Pos' rules={[{ required: true, message: 'Type of Pos' }]}>
-                    <Input type='number' />
-                </Form.Item>
-                <Form.Item name='timeStart' label='Start' rules={[{ required: true, message: 'Please Select Start' }]}>
-                    <Input type='time' onBlur={onchangeTime} id={'timeStart'} />
-                </Form.Item>
-                <Form.Item name='timeEnd' label='End' rules={[{ required: true, message: 'Please Select End' }]}>
-                    <Input type='time' onBlur={onchangeTime} id={'timeEnd'} />
-                </Form.Item>
+        <Col span={24}  >
+            <Row wrap gutter={10}>
+                <Col span={9} style={{ minHeight: '50vh', padding: '0px 20px 0px 20px' }}  >
+                    <Form name='newBill' onFinish={onFinish} form={form} wrapperCol={{ span: 18 }} labelCol={{ span: 7 }} initialValues={initialValuesForm} >
+                        <Form.Item name='cm' label='Case Manager' rules={[{ required: true, message: 'Please select the CM!' }]} >
+                            <Select placeholder='Case Manager' allowClear onChange={onChangeCm}>
+                                {data && data.map((item, index) => (
+                                    <Option key={index} value={item.label}>{item.label}</Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name='cn' label='Name Client' rules={[{ required: true, message: 'Please select the Client Name' }]}>
+                            <Select placeholder='Client Name' allowClear showSearch onChange={onChangeCn}>
+                                {listClients && listClients.map((item, index) => (
+                                    <Option key={index} id={item.cnumb} value={item.label}>{item.label}</Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name='fecha' label='Select Date' rules={[{ required: true, message: 'Plase Chose the Date' }]} >
+                            <Input type='date' onBlur={onchangeTime} id={'fecha'} />
+                        </Form.Item>
+                        <Form.Item label='Domain' name={'domain'} rules={[{ required: true, message: 'Plase Chose the Date' }]} >
+                            <Input type='number' allowClear />
+                        </Form.Item>
+                        <Form.Item name={'pos'} label='Pos' rules={[{ required: true, message: 'Type of Pos' }]}>
+                            <Input type='number' />
+                        </Form.Item>
+                        <Form.Item name='timeStart' label='Start' rules={[{ required: true, message: 'Please Select Start' }]}>
+                            <Input type='time' onBlur={onchangeTime} id={'timeStart'} />
+                        </Form.Item>
+                        <Form.Item name='timeEnd' label='End' rules={[{ required: true, message: 'Please Select End' }]}>
+                            <Input type='time' onBlur={onchangeTime} id={'timeEnd'} />
+                        </Form.Item>
 
-                <Form.Item name={'min'} label='Minutos' >
-                    <Input disabled value={form.getFieldValue('min')} />
-                </Form.Item>
-                <Form.Item name={'units'} label='Units'>
-                    <Input disabled value={form.getFieldValue('unit')} />
-                </Form.Item>
-                <Form.Item name='service' label='Service Type' rules={[{ required: true, message: 'Please Main Service' }]}>
-                    <Select placeholder='Main Service' showSearch onChange={(e) => onchangeService(e)} mode='multiple'>
-                        {services && services.map((item, index) => (
-                            <Option key={index} value={item.label}>{item.label}</Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-                <Form.Item name='description' label='Service Details' rules={[{ required: true, message: 'Please Select Details' }]}>
-                    <Select placeholder='Service' allowClear showSearch mode='multiple'>
-                        {detailsServices && detailsServices.map((item, index) => (
-                            <Option key={index} value={item.label}>{item.label}</Option>
-                        ))}
-                    </Select>
-                </Form.Item>
+                        <Form.Item name={'min'} label='Minutos' >
+                            <Input disabled value={form.getFieldValue('min')} />
+                        </Form.Item>
+                        <Form.Item name={'units'} label='Units'>
+                            <Input disabled value={form.getFieldValue('unit')} />
+                        </Form.Item>
+                        <Form.Item name='service' label='Service Type' rules={[{ required: true, message: 'Please Main Service' }]}>
+                            <Select placeholder='Main Service' showSearch onChange={(e) => onchangeService(e)} mode='multiple'>
+                                {services && services.map((item, index) => (
+                                    <Option key={index} value={item.label}>{item.label}</Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name='description' label='Service Details' rules={[{ required: true, message: 'Please Select Details' }]}>
+                            <Select placeholder='Service' allowClear showSearch mode='multiple'>
+                                {detailsServices && detailsServices.map((item, index) => (
+                                    <Option key={index} value={item.label}>{item.label}</Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
 
-                <Form.Item>
-                    <Button type='primary' htmlType='submit' style={{ width: '100%' }} >Submit</Button>
-                </Form.Item>
+                        <Form.Item>
+                            <Button type='primary' htmlType='submit' style={{ width: '100%' }} >Submit</Button>
+                        </Form.Item>
 
-            </Form>
-        </Col >
+                    </Form>
+                </Col >
+                <Col span={14} style={{ margin: '0 0 0 20px' }}>
+                    <GrapHistory clientName={cn} cm={cm} />
+                </Col>
+            </Row>
+        </Col>
     )
 }
 

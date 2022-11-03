@@ -88,7 +88,18 @@ class DataService {
         }
 
     }
+    async getHistoryClient({ cm, name }) {
+        // console.log(name);
+        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
+        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
+        const result = await getDocs(querySnapShot)
 
+        const arraOfData = result.docs.map((item) => {
+            return { id: item.id, ...item.data() }
+        })
+        arraOfData.sort((a, b) => moment(b.fecha, "DD-MM-YYYY") - moment(a.fecha, "DD-MM-YYYY"));
+        return arraOfData;
+    }
 
     // ===========================================
     sortByDate(data) {
@@ -241,18 +252,7 @@ class DataService {
         }
         );
     }
-    async listNoteByClient({ cm, name }) {
-        // console.log(name);
-        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
-        const result = await getDocs(querySnapShot)
 
-        const arraOfData = result.docs.map((item) => {
-            return { id: item.id, ...item.data() }
-        })
-        arraOfData.sort((a, b) => moment(b.fecha, "DD-MM-YYYY") - moment(a.fecha, "DD-MM-YYYY"));
-        return arraOfData;
-    }
     // #endregion 
 
     // **********************************Lists****************************************************
