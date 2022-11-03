@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 const SliceContext = createContext({});
 const SliceBillingByCmContext = createContext({});
-SliceBillingByCmContext.displayName = "SliceContextBillingByCm";
+// ===================
 SliceContext.displayName = 'SliceContext';
 
 const SliceProvider = ({ slice, children }) => {
@@ -23,6 +23,8 @@ const useSliceSelector = () => {
     return useSelector((state) => state.CManager);
 }
 
+// ===================
+SliceBillingByCmContext.displayName = "SliceContextBillingByCm";
 const BillingByCmProvider = ({ slice, children }) => {
     return (
         <SliceBillingByCmContext.Provider value={slice}>
@@ -30,7 +32,7 @@ const BillingByCmProvider = ({ slice, children }) => {
         </SliceBillingByCmContext.Provider>
     );
 };
- 
+
 const useSliceBillingByCmActions = () => {
     const slice = useContext(SliceBillingByCmContext);
     return slice.actions;

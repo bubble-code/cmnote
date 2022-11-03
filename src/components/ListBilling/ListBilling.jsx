@@ -1,10 +1,10 @@
 
-import { useEffect, useState, useRef } from 'react';
-import { useSliceSelector, useSliceBillingByCmActions, useSliceBillingByCmSelector } from '../../Redux/sliceProvider';
-import { getBillingByCMs } from '../../Redux/Actions/ActionCMS';
+import {  useState, useRef } from 'react';
+import { useSliceSelector,  useSliceBillingByCmSelector } from '../../Redux/sliceProvider';
 import { useDispatch } from 'react-redux';
+import { loadBillingByCm } from '../../Redux/Reducers/BillingByCmReducer';
 // Components
-import { Col, Row, Form, Select, Button } from 'antd';
+import { Col, Row, Form, Select } from 'antd';
 import TableRenderBillOpen from '../TableRenderBillOpen/TableRenderBillOpen';
 import SegmentedControl from '../SegmentedControl/SegmentedControl';
 import ListBillByClient from '../ListBillByClient/ListBillByClient';
@@ -14,19 +14,16 @@ const { Option } = Select;
 
 export const ListBilling = () => {
   const { data: listCms } = useSliceSelector();
-  const { getBillingByCm, errorBillingByCm, loadingBillingByCm } = useSliceBillingByCmActions();
-  const { data: listBillingByCm = {} } = useSliceBillingByCmSelector();
+  const { entities: listBillingByCm = {} } = useSliceBillingByCmSelector();
   const { clienWithBill = [], data: listBills } = listBillingByCm;
   const dispatch = useDispatch();
   const [selectedValue1, setSelectedValue1] = useState({ idx: 0 });
 
 
   const onChangeCm = async (value) => {
-    // console.log(value);
-    await getBillingByCMs(dispatch, loadingBillingByCm, getBillingByCm, errorBillingByCm, value);
+    dispatch(loadBillingByCm({ cm: value }));
   };
 
-  useEffect(() => { }, []);
 
   return (
     <Col span={24} style={{ minHeight: '50vh', padding: '0px 20px 0px 20px' }} >
@@ -40,21 +37,6 @@ export const ListBilling = () => {
                 ))}
               </Select>
             </Form.Item>
-            {/*</Col>
-          <Col span={8}>
-                <Form.Item >
-                  <Select placeholder='Client Name' allowClear >
-                    {clienWithBill && clienWithBill.map((item, index) => (
-                      <Option key={index} value={item}>{item}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item >
-                  <Button type='primary' >Search</Button>
-                </Form.Item>
-                    </Col>*/}
           </Form>
         </Col>
       </Row>

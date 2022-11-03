@@ -12,7 +12,7 @@ const { Option } = Select
 
 export const ListBillByClient = () => {
     const [stateSelectedClient, setStateSelectedClient] = useState({ client: '' })
-    const { data: listBillingByCm } = useSliceBillingByCmSelector();
+    const { entities: listBillingByCm } = useSliceBillingByCmSelector();
     const { clienWithBill = [], data: listBills = [] } = listBillingByCm;
     const [editingBill, setEditingBill] = useState({});
 
@@ -36,7 +36,7 @@ export const ListBillByClient = () => {
         keys.forEach(key => {
             result.push(...listBills[key].filter((item) => item.cn === client));
         });
-        console.log("Result", [...result])
+        // console.log("Result", [...result])
         return [...result];
     }
     return (

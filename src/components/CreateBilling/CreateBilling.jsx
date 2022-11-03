@@ -10,7 +10,7 @@ import moment from 'moment/moment';
 import { async } from '@firebase/util';
 const { Option } = Select;
 
-const initialValuesForm = {
+const initialValuesForm = { 
     cn: '',
     cm: '',
     description: [],

@@ -1,25 +1,28 @@
+import { createAsyncThunk, } from "@reduxjs/toolkit";
+import DataService from '../../services/service';
 
 
+const loadBillingByCm = createAsyncThunk(
+    'BillingByCm/fetchBillingByCm',
+    async ({ cm }) => {
+        const response = await DataService.getBillingOpenByCm({ cm: cm });
+        return response;
+    }
+);
 
-const getBillingByCm = (state, action) => {
-    return {
-        ...state,
-        data: action.payload
-    };
-}
+const updateBilling = createAsyncThunk(
+    'BillingByCm/saveNote',
+    async ({ data }) => {
+        const { cm, id, status } = data;
+        if(status === 'open'){
+            await DataService.saveNote({ cm, id, data });
+        }else{
+            await DataService.closeBilling({ cm, id, data });
+        }
 
-const loadingBillingByCm = (state) => {
-    return {
-        ...state,
-        loading: true
-    };
-};
+        return { data };
+    }
+);
 
-const errorBillingByCm = (state, action) => {
-    return {
-        ...state,
-        error: action.payload
-    };
-};
 
-export { getBillingByCm, loadingBillingByCm, errorBillingByCm };
+export { loadBillingByCm, updateBilling };

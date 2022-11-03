@@ -4,9 +4,7 @@ import React from 'react';
 import moment from 'moment';
 
 // Components
-import { useTable, useExpanded } from 'react-table';
-import { Row, Col, Typography, Space, Dropdown, Badge, Menu, Form, Table, InputNumber, Input, Popconfirm, Collapse } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Row, Col, Typography, Collapse } from "antd";
 import WriteNote from '../WriteNote/WriteNote';
 import './styles.css';
 
@@ -21,6 +19,7 @@ const TableRenderBillOpen = ({ listBills = {} }) => {
     const { Panel } = Collapse;
 
     const onClickToEdit = (current) => {
+        console.log("current", current);
         setEditingBill(current);
         setSelectRow(current.id);
     };

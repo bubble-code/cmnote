@@ -8,6 +8,8 @@ const getCms = async (dispatch, func) => {
 };
 
 const getBillingByCMs = async (dispatch, loadF, getF, errorF, cm) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    // const {getBillingByCm } = useSliceBillingByCmActions();
     dispatch(loadF());
     try {
         const response = await DataService.getBillingOpenByCm({ cm: cm });
@@ -50,14 +52,6 @@ const createUpdateBilling = async (data) => {
     await DataService.createBilling({ data: data });
 };
 
-const saveNote = async ({ dispatch, data, func }) => {
-    try {
-        await DataService.saveNote({ cm: data.cm, id: data.id, data: data });
-        dispatch(func());
-    } catch (error) {
-        console.log("error loading billing by cm", error);
-    }
-};
 
 
-export { getCms, getClients, getServices, addService, deleteService, updateService, getDetailsServices, getBillingByCMs, createUpdateBilling, saveNote };
+export { getCms, getClients, getServices, addService, deleteService, updateService, getDetailsServices, getBillingByCMs, createUpdateBilling };
