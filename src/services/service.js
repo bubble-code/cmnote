@@ -10,6 +10,7 @@ class DataService {
     _pathCM = "/CM/cm/cm";
     _pathDxCode = "/dxCode";
     _pathService = "/CM/Services/Services";
+    _pathCloseBilling = "/CM/CloseBilling";
 
     // ********************************** LIST ****************************************************
     // #region GETS
@@ -67,9 +68,27 @@ class DataService {
         }
     }
     async saveNote({ cm, id, data }) {
-        const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
-        await updateDoc(docRef, data);
+        try {
+            const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+            await updateDoc(docRef, data);
+
+        } catch (error) {
+            console.log('saveNote', error);
+        }
     }
+
+    async closeBilling({ cm, id, data }) {
+        try {
+            const docRef = doc(db, `${this._pathCM}/${cm}/openBilling/`, `${id}`);
+            await deleteDoc(docRef);
+            const closeCollection = collection(db, `${this._pathCM}/${cm}/CloseBilling`);
+            await addDoc(closeCollection, { ...data, cm, id, });
+        } catch (error) {
+            console.log('closeBilling', error);
+        }
+
+    }
+
 
     // ===========================================
     sortByDate(data) {
