@@ -5,7 +5,7 @@ import {
   Controls,
   Background,
   useNodesState,
-  useEdgesState,
+  useEdgesState
 } from 'react-flow-renderer';
 import ReactFlow from 'react-flow-renderer';
 import { nodes as initialNodes, edges as initialEdges } from './initial-elements';
@@ -15,8 +15,8 @@ import 'react-flow-renderer/dist/style.css';
 import './overview.css';
 
 
+
 import { useEffect } from 'react';
-import { useMemo } from 'react';
 
 const nodeTypes = {
   custom: CustomNode,
@@ -65,21 +65,31 @@ const OverviewFlow = ({ list, cn }) => {
   // });
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
+    <ReactFlow className='nodeflow'
+      // nodes={nodes}
+      // edges={edges}
+
       // edges={edgesWithUpdatedTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-    // onConnect={onConnect}
-    // onInit={onInit}
-    // fitView
-    // attributionPosition="top-right"
-    // nodeTypes={nodeTypes}
+      onConnect={onConnect}
+      // onInit={onInit}
+      fitView
+      snapToGrid
+      attributionPosition="top-center"
+      // nodeTypes={nodeTypes}
+      defaultZoom={0.1}
     >
+      {(event) => console.log(event)}
+      <foreignObject x="0" y="0" width="100%" height="100%">
+        <div style={{ position: 'relative' }}>
+        xccxzcnzlncznl
+        </div>
+      </foreignObject>
       {/*<MiniMap style={minimapStyle} zoomable pannable />
-      <Controls />
-      <Background color="#aaa" gap={16} />*/}
+      <Controls />*/}
+
+      <Background color="#aaa" gap={16} />
     </ReactFlow>
   );
 };

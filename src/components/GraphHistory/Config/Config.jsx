@@ -10,7 +10,7 @@ import {
     QuestionOutlined,
     TagOutlined
 } from "@ant-design/icons";
-// import * as colors from "@contactlab/ds-tokens/constants/colors";
+import * as colors from "@contactlab/ds-tokens/constants/colors";
 
 
 
@@ -19,7 +19,7 @@ export const nodeConfig = (type) => {
     switch (type) {
         case "source":
             return {
-                color: 'success',
+                color: colors.success,
                 icon: <DatabaseOutlined style={{ color: 'success' }} />
             };
         case "email":
@@ -72,4 +72,12 @@ export const nodeConfig = (type) => {
                 icon: <FlagOutlined style={{ color: 'warning' }} />
             };
     }
+};
+
+export const LayoutOptions = {
+    "elk.algorithm": "layered",
+    "elk.direction": "DOWN",
+    "elk.portAlignment.default": "CENTER",
+    "elk.spacing.nodeNode": "40",
+    "elk.spacing.portPort": "2"
 };
