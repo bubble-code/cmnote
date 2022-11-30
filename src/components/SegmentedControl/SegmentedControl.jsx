@@ -28,27 +28,21 @@ const SegmentedControl = ({ name, segments, callback, defaultIndex = 0, controlR
     };
 
     return (
-        <Col className="controls-container" ref={controlRef}>
-            <div className={`controls ${componentReady.current ? "ready" : "idle"}`}>
-                {segments?.map((item, idx) => (
-                    <div
-                        key={item.value}
-                        className={`segment ${idx === activeIndex ? "active" : "inactive"}`}
-                        ref={item.ref}
+        <div className={` flex flex-row gap-3 justify-between   z-10 p-1 overflow-hidden m-auto`} ref={controlRef}>
+            {segments?.map((item, idx) => (
+                <div key={item.value} className={`w-32 relative text-center `} ref={item.ref}                    >
+                    <button
+                        value={item.value}
+                        id={item.label}
+                        name={name}
+                        onClick={() => onInputChange(idx)}
+                        className={`w-full h-full text-center ${activeIndex === idx ? 'bg-black text-white uppercase' : 'bg-gradient-to-r from-gray-400 to-gray-800'}    border-none focus:outline-none rounded-lg `}
                     >
-                        <input
-                            type="radio"
-                            value={item.value}
-                            id={item.label}
-                            name={name}
-                            onChange={() => onInputChange(idx)}
-                            checked={idx === activeIndex}
-                        />
-                        <Typography.Text className="label">{item.label}</Typography.Text>
-                    </div>
-                ))}
-            </div>
-        </Col>
+                        <span className={` label`}>{item.label}</span>
+                    </button>
+                </div>
+            ))}
+        </div>
     );
 };
 

@@ -21,11 +21,9 @@ export const Billing = () => {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col span={20}>
-                            <Row justify='start' style={{ paddingTop: '2rem' }}>
-                                <Outlet />
-                            </Row>
-                        </Col>
+                        <div className='w-4/5 relative'>
+                            <Outlet />
+                        </div>
                     </Row>
                 </Col>
             </BillingByCmProvider>

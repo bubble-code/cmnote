@@ -16,6 +16,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import ProtecRoute from "./components/ProtectRoute/ProtecRoute";
 
 import 'antd/dist/antd.css';
+import { MainClient } from "./components/Client/MainClient";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="listbilling" element={<ListBilling />} />
               <Route path="createbilling" element={<CreateBilling />} />
               <Route path="crudservice" element={<CrudService />} />
+              <Route path="clients" element={<MainClient />} />
             </Route>
             <Route path="casemanager" element={<CaseManager />} />
           </Route>

@@ -90,8 +90,8 @@ class DataService {
     }
     async getHistoryClient({ cm, name }) {
         // console.log(name);
-        const collectionn = collection(db, `${this._pathCM}/${cm}/openBilling`);
-        const querySnapShot = query(collectionn, where('status', '==', 'completed'), where("cn", "==", `${name}`));
+        const collectionn = collection(db, `${this._pathCM}/${cm}/CloseBilling`);
+        const querySnapShot = query(collectionn, where("cn", "==", `${name}`));
         const result = await getDocs(querySnapShot)
 
         const arraOfData = result.docs.map((item) => {
@@ -224,8 +224,8 @@ class DataService {
         const querySnapShot = query(collectionn);
         const result = await getDocs(querySnapShot)
         return result.docs.map((item) => {
-            // const { name, lastName } = item.data();
-            return { label: item.id, cnumb: item.data().cnumb };
+            const { clientNumber, cnumb, dataAssigned, dob, gender } = item.data();
+            return { label: item.id, cnumb: item.data().cnumb, clientNumber, dataAssigned, cnumb, dob, gender };
         });
     }
     // { id: item.id, label: item.data()['serviceDesx'], ...item.data() }

@@ -7,6 +7,12 @@ const linksMenu = [
         icon: 'icon-speedometer',
     },
     {
+        key: 'clients',
+        label: 'Clients',
+        url: 'clients',
+        icon: 'icon-people',
+    },
+    {
         key: 'listbill',
         label: 'List Bill',
         url: 'listbilling',
